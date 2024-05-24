@@ -1,31 +1,31 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import request
-from rest_framework import viewsets,status
+from django.urls import reverse
+from rest_framework import generics,status
 from .models import *
 from .forms import TaskForm
 from .serializers import *
 from rest_framework.response import Response
 
-class taskViewSet(viewsets.ViewSet):
-    def createTask(self,request):
-        if request.method=='POST':
-            form=TaskForm(request.POST)
-            serialized=TaskSerializer(data=form)
-            if serialized.is_valid():
-                serialized.save()
-            return Response(serialized.data,status=status.HTTP_201_CREATED)
+class taskViewSet(generics.GenericAPIView):
+    queryset = task.objects.all()
+    serialized= TaskSerializer(queryset,many=True)
+    formClass= TaskForm
+    template='taskForm.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.formClass()
+        return render(request, self.template, {'form': form})
+
+    def createTask(self,request, *args, **kwargs):
+        form = self.formClass(request.POST)
+        if form.is_valid():
+            serializer = TaskSerializer(data=form.cleaned_data)
+            if serializer.is_valid():
+                serializer.save()
+                return redirect(reverse('task-form-view'))
+            else:
+                return render(request, self.template, {'form': form, 'errors': serializer.errors})
         else:
-            form=TaskForm()
-        return render(request,'templates/taskForm.html',{'form':form})
-
-    def listTasks(self, request):
-        queryset = task.objects.all()
-        serialized= TaskSerializer(queryset,many=True)
-        return Response(serialized.data)
-    
-    #def updateTask(self,request,pk=None):
-        #task=task.object.get(pk=pk)
-
-#class CalcViewSet(viewsets.ViewSet):
-    #queryset = calc.objects.all()
-    #serializer_class = CalcSerializer
+            return render(request, self.template, {'form': form, 'errors': form.errors}) 
+       
