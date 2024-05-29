@@ -1,8 +1,14 @@
 from django import forms
+from .models import *
 
-class TaskForm(forms.Form):
-    Prichoices = [('top', 'Top'), ('medium', 'Medium'), ('low', 'Low')]
-    id= forms.ChoiceField(choices=Prichoices,widget=forms.Select(attrs={'class': 'form-control'}))
-    task_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    desc = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}))
-    duration = forms.DurationField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'time'}))
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = task
+        fields = ['id', 'task_name', 'desc', 'duration']
+        exclude = ['start']  
+        widgets = {
+            'task_id': forms.Select(choices=task.TASK_ID_CHOICES),
+            'task_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'desc': forms.Textarea(attrs={'class': 'form-control'}),
+            'duration': forms.TextInput(attrs={'class': 'form-control'}),
+        }

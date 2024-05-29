@@ -1,15 +1,27 @@
 from django.db import models
 from datetime import datetime
 import uuid
+from django.db import models
+from datetime import datetime
+
 class task(models.Model):
-    id= models.CharField(primary_key=True,max_length=20)
-    taskName=models.CharField(max_length=50)
-    desc=models.TextField(max_length=200)
-    duration=models.DurationField()
-    start=models.DateTimeField(default=datetime.now())
+    TASK_ID_CHOICES = [
+        ('Top', 'top'),
+        ('Low', 'low'),
+        ('Mid', 'mid'),
+        # Add more choices as needed
+    ]
+    
+    task_id = models.CharField(max_length=20, choices=TASK_ID_CHOICES,default='mid')
+    task_name = models.CharField(max_length=50,unique=True)  # task_name should still be unique if required
+    desc = models.TextField(max_length=200)
+    duration = models.DurationField()
+    start = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
-        return self.taskName    
+        return self.task_name
+
+       
     
 class calc(models.Model):
     taskName=models.ForeignKey(to=task,on_delete=models.CASCADE)
