@@ -12,5 +12,5 @@ class tasklc(generics.ListCreateAPIView):
     serializer_class= TaskSerializer
     formClass= TaskForm
     template='taskForm.html'
-
+ 
    
