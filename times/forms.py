@@ -1,4 +1,4 @@
-from django import forms
+"""from django import forms
 from .models import *
 
 class TaskForm(forms.ModelForm):
@@ -11,4 +11,4 @@ class TaskForm(forms.ModelForm):
             'task_name': forms.TextInput(attrs={'class': 'form-control'}),
             'desc': forms.Textarea(attrs={'class': 'form-control'}),
             'duration': forms.TextInput(attrs={'class': 'form-control'}),
-        }
+        }"""

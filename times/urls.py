@@ -3,4 +3,5 @@ from django.urls import path
 from .models import *
 from .views import *
 
-urlpatterns= [path('create/',tasklc.as_view())]
+urlpatterns= [path('create/',tasklc.as_view()),
+              path('today/', today.as_view())]

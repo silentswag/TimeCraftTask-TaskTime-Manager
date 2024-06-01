@@ -3,14 +3,19 @@ from django.http import request
 from django.urls import reverse
 from rest_framework import generics,status
 from .models import *
-from .forms import TaskForm
+#from .forms import TaskForm
 from .serializers import *
 from rest_framework.response import Response
 
 class tasklc(generics.ListCreateAPIView):
     queryset = task.objects.all()
     serializer_class= TaskSerializer
-    formClass= TaskForm
-    template='taskForm.html'
- 
-   
+    """formClass= TaskForm
+    template='taskForm.html' """
+
+class today(generics.ListAPIView):
+    #queryset=task.objects.all()
+    serializer_class= TaskSerializer
+
+    def get_queryset(self):
+        return task.objects.filter(task_id="Mid")

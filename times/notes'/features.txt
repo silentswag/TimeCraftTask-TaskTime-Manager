@@ -1,0 +1,4 @@
+accepting user tasks
+i want it to track duration of each task and ping when done
+have a start pause 
+show todays laptop task rate

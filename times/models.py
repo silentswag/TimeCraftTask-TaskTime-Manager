@@ -25,7 +25,7 @@ class task(models.Model):
     
 class calc(models.Model):
     taskName=models.ForeignKey(to=task,on_delete=models.CASCADE)
-    today=models.IntegerField()
+    numsTask=models.IntegerField()
     weekly=models.FloatField()
 
     def __str__(self):
