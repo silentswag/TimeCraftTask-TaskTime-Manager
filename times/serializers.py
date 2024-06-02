@@ -6,7 +6,8 @@ class TaskSerializer(serializers.ModelSerializer):
         model = task
         fields = ['task_id','task_name','desc','duration','start']
 
-class CalcSerializer(serializers.ModelSerializer):
+"""class CalcSerializer(serializers.ModelSerializer):
     class Meta:
         model = calc
         fields = '__all__'
+"""

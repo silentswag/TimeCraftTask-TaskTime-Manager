@@ -16,17 +16,17 @@ class task(models.Model):
     task_name = models.CharField(max_length=50,unique=True)  # task_name should still be unique if required
     desc = models.TextField(max_length=200)
     duration = models.DurationField()
-    start = models.DateTimeField(default=datetime.now)
+    start = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.task_name
 
        
     
-class calc(models.Model):
+"""class calc(models.Model):
     taskName=models.ForeignKey(to=task,on_delete=models.CASCADE)
     numsTask=models.IntegerField()
     weekly=models.FloatField()
 
     def __str__(self):
-        return f'calcultions for {self.task.taskName}'
+        return f'calcultions for {self.task.taskName}' """
